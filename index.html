@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>オセロ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <h1>オセロ</h1>
+
+    <div id="scoreboard">
+      <div class="score-card" id="score-black">
+        <div class="disc black"></div>
+        <span class="player-label">黒</span>
+        <span class="score" id="count-black">2</span>
+      </div>
+      <div id="turn-indicator">
+        <div class="disc" id="current-disc"></div>
+        <span id="turn-text">黒の番</span>
+      </div>
+      <div class="score-card" id="score-white">
+        <div class="disc white"></div>
+        <span class="player-label">白</span>
+        <span class="score" id="count-white">2</span>
+      </div>
+    </div>
+
+    <div id="board-container">
+      <div id="board"></div>
+    </div>
+
+    <div id="message-area">
+      <p id="message"></p>
+    </div>
+
+    <button id="reset-btn">リセット</button>
+  </div>
+
+  <div id="game-over-overlay" class="hidden">
+    <div id="game-over-modal">
+      <h2 id="game-over-title"></h2>
+      <div id="final-scores">
+        <div class="final-score">
+          <div class="disc black"></div>
+          <span>黒: </span><span id="final-black">0</span>
+        </div>
+        <div class="final-score">
+          <div class="disc white"></div>
+          <span>白: </span><span id="final-white">0</span>
+        </div>
+      </div>
+      <button id="play-again-btn">もう一度</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
