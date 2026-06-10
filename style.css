@@ -166,7 +166,34 @@ h1 {
   border-radius: 20px;
 }
 
-/* Reset button */
+/* Buttons */
+#btn-row {
+  display: flex;
+  gap: 12px;
+}
+
+#undo-btn {
+  padding: 10px 32px;
+  font-size: 1rem;
+  font-weight: bold;
+  background: #2980b9;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#undo-btn:hover:not(:disabled) {
+  background: #3498db;
+}
+
+#undo-btn:disabled {
+  background: #555;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
 #reset-btn {
   padding: 10px 32px;
   font-size: 1rem;

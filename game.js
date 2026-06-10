@@ -12,6 +12,7 @@ const DIRECTIONS = [
 let board = [];
 let currentPlayer = BLACK;
 let gameOver = false;
+let history = [];
 
 function initBoard() {
   board = Array.from({ length: SIZE }, () => Array(SIZE).fill(EMPTY));
@@ -117,15 +118,42 @@ function setMessage(text) {
   document.getElementById('message').textContent = text;
 }
 
+function saveHistory() {
+  history.push({
+    board: board.map(row => [...row]),
+    currentPlayer,
+  });
+  updateUndoButton();
+}
+
+function undoMove() {
+  if (history.length === 0) return;
+  const prev = history.pop();
+  board = prev.board;
+  currentPlayer = prev.currentPlayer;
+  gameOver = false;
+  document.getElementById('game-over-overlay').classList.add('hidden');
+  setMessage('');
+  const validMoves = getValidMoves(currentPlayer);
+  updateScoreboard();
+  renderBoard(validMoves);
+  updateUndoButton();
+}
+
+function updateUndoButton() {
+  document.getElementById('undo-btn').disabled = history.length === 0;
+}
+
 function handleMove(r, c) {
   if (gameOver) return;
 
   const flips = getFlips(r, c, currentPlayer);
   if (flips.length === 0) return;
 
+  saveHistory();
+
   board[r][c] = currentPlayer;
 
-  // アニメーション付きで反転
   flips.forEach(([fr, fc]) => {
     board[fr][fc] = currentPlayer;
   });
@@ -179,16 +207,19 @@ function endGame() {
 function resetGame() {
   gameOver = false;
   currentPlayer = BLACK;
+  history = [];
   initBoard();
   document.getElementById('game-over-overlay').classList.add('hidden');
   setMessage('');
   const validMoves = getValidMoves(currentPlayer);
   updateScoreboard();
   renderBoard(validMoves);
+  updateUndoButton();
 }
 
 // --- Init ---
 document.getElementById('reset-btn').addEventListener('click', resetGame);
+document.getElementById('undo-btn').addEventListener('click', undoMove);
 document.getElementById('play-again-btn').addEventListener('click', resetGame);
 
 resetGame();
